@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+   <title>World Cup </title>
+</head>
+<body onload="getData()">
+    <h1>World Cup 2018</h1>
+ <table border="0" cellpadding="10">
+       <form name="demo">
+       
+ <tr>
+   <td>
+       <select id="group" style="width: 165px; margin-right: 30px;">
+
+       </select>
+
+   </td>
+</tr>
+<tr>
+   <td><input type="text" name="score" placeholder="Score"></td>
+</tr>
+
+
+<tr>
+ <td><input type="button" value="Click Me"  class="loadButton" name="res"   style="width: 150px; color:red;"></input></td>
+</tr>
+</form>
+</table>
+<script  src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+var msg;
+function getData(){
+    $.ajax({
+        url         : "https://api.fifa.com/api/v1/calendar/matches?idseason=254645&idcompetition=17&language=en-GB&count=100",
+            type        : "POST",
+            contentType : "application/json",
+            dataType    : "json",
+            processData : false,
+            cache       : false,
+    }).done(function( msgg ) 
+    {
+        console.log("cccc"+msgg);
+    }
+    );
+}
+        
+</script>
+
+</body>
+</html>
