@@ -31,18 +31,23 @@
 </table>
 <script  src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-var msg;
+var msg = new Object();
 function getData(){
     $.ajax({
         url         : "https://api.fifa.com/api/v1/calendar/matches?idseason=254645&idcompetition=17&language=en-GB&count=100",
-            type        : "POST",
+            type        : "GET",
             contentType : "application/json",
             dataType    : "json",
             processData : false,
             cache       : false,
     }).done(function( msgg ) 
     {
-        console.log("cccc"+msgg);
+        alert("cccc"+msgg);
+        msg = msgg.Results;
+
+        alert("cccc"+msg);
+       
+
     }
     );
 }

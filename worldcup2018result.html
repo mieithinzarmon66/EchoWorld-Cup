@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+   <title>World Cup </title>
+</head>
+<body onload="getData()">
+    <h1>World Cup 2018</h1>
+ <table border="0" cellpadding="10">
+       <form name="demo">
+       
+ <tr>
+   <td>
+       <select id="group" style="width: 165px; margin-right: 30px;">
+
+       </select>
+
+   </td>
+</tr>
+<tr>
+   <td><textarea name="score" placeholder="Score" style="width:300px; height:200px;"></textarea></td>
+</tr>
+
+
+<tr>
+ <td><input type="button" value="Click Me"  class="loadButton" name="res"   style="width: 150px; color:red;"></input></td>
+</tr>
+</form>
+</table>
+<script  src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var home = new Array;
+    var dups=[];
+    var away = new Array;
+    var x;
+    var country = new Array;
+    var k=0;
+    var de= new Array;
+    var t = new Array;
+    var Score1 = new Array;
+    var Score2 = new Array;
+    var record =  new Array;
+    var resultt =  new Array;
+var msg = new Object();
+function getData(){
+    $.ajax({
+        url         : "https://api.fifa.com/api/v1/calendar/matches?idseason=254645&idcompetition=17&language=en-GB&count=100",
+            type        : "GET",
+            contentType : "application/json",
+            dataType    : "json",
+            processData : false,
+            cache       : false,
+    }).done(function( msgg ) 
+    {
+        //alert("data from link"+msgg);
+        resultt = msgg.Results;
+       for(x in resultt[k])
+{
+           for (var h in resultt)
+{
+               Score1[h] =resultt[k].Home["Score"];
+               Score2[h] =resultt[k].Away["Score"];
+              
+               dups=remove(away)  ;
+                 
+                 country=dups.concat(de);
+                 record =remove(country);
+                 
+
+               home[h] =resultt[k].Home.TeamName[0].Description;
+            
+              away[h] =resultt[k].Away.TeamName[0].Description;
+              
+               k++;
+               x++;
+               $('#group').html('');
+               var options='';
+               options +='<option value="Select">Select Country</option>';
+               for (var q=0;q<record.length;q++){
+                   options += '<option value="' + record[q] + '">' + record[q] + '</option>';
+
+               }
+               $('#group').append(options);
+
+
+               
+              
+           }
+         }
+         
+ }); 
+}
+$(".loadButton").click(function(e)
+{
+var e=document.getElementById("group");
+var cur=e.options[e.selectedIndex].value;
+
+//alert("select country           " + cur);
+for(var t=0;t<home.length;t++){
+
+if(cur == home[t] || cur == away[t]){
+    var sc=Score1[t];
+    var sc2=Score2[t];
+    var cou=home[t];
+    var cou2=away[t];
+    var str= cou+" : "+sc+" vs "+cou2+" : "+sc2+ "\n";
+    document.demo.score.value +=str;
+}
+}
+ });
+
+
+
+function remove(arr){
+ var uniw=new Array;
+ uniw=arr.filter(function(ele,index,slf){
+     return index == slf.indexOf(ele);
+
+ });
+ 
+
+return uniw;
+}
+
+  
+
+
+</script>
+
+</body>
+</html>
